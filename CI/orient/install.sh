@@ -1,16 +1,14 @@
-#!/bin/bash
+#!/usr/bin/env bash
+echo "...installing orient version ${ORIENT_VERSION} to ${INSTALL_DIR}"
 
-# Add environment java vars
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-export JRE_HOME=/usr/lib/jvm/java-8-oracle
-
+### install orient
 # Download orient
-wget -O $HOME/orientdb-community-$ORIENT_VERSION.tar.gz wget http://www.orientechnologies.com/download.php?file=orientdb-community-$ORIENT_VERSION.tar.gz
-tar -xzf $HOME/orientdb-community-$ORIENT_VERSION.tar.gz -C $HOME/
+wget -O $INSTALL_DIR/orientdb-community-$ORIENT_VERSION.tar.gz wget http://www.orientechnologies.com/download.php?file=orientdb-community-$ORIENT_VERSION.tar.gz
+tar -xzf $INSTALL_DIR/orientdb-community-$ORIENT_VERSION.tar.gz -C $INSTALL_DIR/
 
-#update config with correct user/password
-sed -i '/<users>/a <user name="root" password="root" resources="*"><\/user>' $HOME/orientdb-community-$ORIENT_VERSION/config/orientdb-server-config.xml
+### fix to make sure the orient install is also owned by root
+chown -R root:root $INSTALL_DIR/orientdb-community-$ORIENT_VERSION
 
-# run and wait for it to init
-$HOME/orientdb-community-$ORIENT_VERSION/bin/server.sh > /dev/null 2>&1 &
-sleep 15
+# update server.sh with correct user and path
+sed -i '/ORIENTDB_DIR="YOUR_ORIENTDB_INSTALLATION_PATH"/ c\ORIENTDB_DIR="'$INSTALL_DIR'/orientdb-community-'$ORIENT_VERSION'"' $INSTALL_DIR/orientdb-community-$ORIENT_VERSION/bin/orientdb.sh
+sed -i '/ORIENTDB_USER="USER_YOU_WANT_ORIENTDB_RUN_WITH"/ c\ORIENTDB_USER="root"' $INSTALL_DIR/orientdb-community-$ORIENT_VERSION/bin/orientdb.sh

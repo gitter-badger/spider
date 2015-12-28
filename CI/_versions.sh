@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+### Database Versions
+export NEO4J_VERSION=${NEO4J_VERSION:="2.2.4"}
+export GREMLINSERVER_VERSION=${GREMLINSERVER_VERSION:="3.0.2"}
+export ORIENT_VERSION=${ORIENT_VERSION:="2.1.6"}
+
+#export NEO4J_VERSION="2.2.4"
+#export GREMLINSERVER_VERSION="3.0.2"
+#export ORIENT_VERSION="2.1.6"

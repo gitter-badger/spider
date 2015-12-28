@@ -10,11 +10,10 @@ matrix:
   allow_failures:
     - php: nightly
     - php: 7.0
-env:
-  - NEO4J_VERSION="2.2.4" GREMLINSERVER_VERSION="3.0.2" ORIENT_VERSION="2.1.6"
 
 before_install:
   - sudo apt-get update > /dev/null
+<<<<<<< Updated upstream
 
 install:
   # install Oracle JDK8
@@ -25,6 +24,12 @@ install:
   - sh -c ./CI/neo4j/install.sh
   # install orient
   - sh -c ./CI/orient/install.sh
+=======
+  - chmod -R +x ./CI
+
+install:
+  - sh -c ./CI/travis-setup.sh
+>>>>>>> Stashed changes
 
 before_script:
   - travis_retry composer self-update

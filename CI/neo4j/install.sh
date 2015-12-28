@@ -1,14 +1,8 @@
-#!/bin/bash
-
-# Add environment java vars
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-export JRE_HOME=/usr/lib/jvm/java-8-oracle
+#!/usr/bin/env bash
+echo "...installing neo version ${NEO4J_VERSION} to ${INSTALL_DIR}"
 
 # install Neo4j locally:
-wget -O $HOME/neo4j-community-$NEO4J_VERSION-unix.tar.gz dist.neo4j.org/neo4j-community-$NEO4J_VERSION-unix.tar.gz
-tar -xzf $HOME/neo4j-community-$NEO4J_VERSION-unix.tar.gz -C $HOME/
-$HOME/neo4j-community-$NEO4J_VERSION/bin/neo4j start
-sleep 10
+wget -O $INSTALL_DIR/neo4j-community-$NEO4J_VERSION-unix.tar.gz dist.neo4j.org/neo4j-community-$NEO4J_VERSION-unix.tar.gz
+tar -xzf $INSTALL_DIR/neo4j-community-$NEO4J_VERSION-unix.tar.gz -C $INSTALL_DIR/
 
-# changing password:
-curl -vX POST http://neo4j:neo4j@localhost:7474/user/neo4j/password -d"password=j4oen"
+sed -i 's/#org.neo4j.server.webserver.address=0.0.0.0/org.neo4j.server.webserver.address=0.0.0.0/' $INSTALL_DIR/neo4j-community-$NEO4J_VERSION/conf/neo4j-server.properties
